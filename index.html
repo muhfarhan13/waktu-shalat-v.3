@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+    <title>Waktu Sholat</title>
+</head>
+
+<body>
+    <div class="sm:w-2/4 md:w-3/6 lg:w-2/6 w-auto md:mx-auto content-center mx-auto bg-center my-auto h-full">
+        <div class="background-mosque h-screen">
+            <h2 class="text-white flex justify-center text-xl ml-2 pt-2">Jadwal Adzan</h2>
+
+            <div class="center-content text-white">
+                <div class="text-center mt-48">
+                    <div class="rounded-full h-48 w-48 flex items-center justify-center border-2 mx-auto text-4xl">
+                        <label id="clock"></label>
+                    </div>
+                    <div id="text-content" class="relative">
+                        <div class="mt-4 flex items-center justify-center z-10">
+                            <i class="fas fa-map-marker-alt pr-2"></i>
+                            <select id="selection" class="rounded-md" onchange="selectCity()">
+                                <option selected hidden>Pilih Kota</option>
+                            </select>
+                        </div>
+                        <div class="text-center mt-4">
+                            <label id="nextTime" class="text-center mt-4"></label>
+                            <p id="remainingText"></p>
+                        </div>
+                        <audio src="public/src/adzan.mp3" id="audio"></audio>
+                    </div>
+                </div>
+            </div>
+            <div class="sm:w-2/4 md:w-3/6 md:mt-8 lg:w-2/6 pt-2 bg-white rounded-t-3xl pb-8 fixed bottom-0"
+                id="openBotSheet">
+                <span class="bg-gray-400 h-2 flex justify-center sm:w-2/4 md:w-2/5 lg:w-2/6 w-auto md:mx-auto
+                    content-center mx-auto mt-4">
+                </span>
+            </div>
+            <div class="sm:w-2/4 md:w-3/6 md:mt-8 lg:w-2/6 pt-2 bg-white rounded-t-3xl pb-12 fixed" id="divBottom">
+                <div class="bg-transparent w-full p-5 rounded-t-3xl pr-24 pl-24" id="closeBotSheet">
+                    <span
+                        class="bg-gray-400 h-2 flex justify-center sm:w-2/4 md:w-2/5 lg:w-2/6 w-auto md:mx-auto content-center mx-auto"></span>
+                </div>
+                <div class="grid grid-cols-2 gap-4 items-center mt-2">
+                    <div class="remaining-pray ml-9">
+                        <div class="pt-8">
+                            <i class="fas fa-moon text-yellow-400 mr-3"></i><big>Subuh</big>
+                        </div>
+                        <div class="text-sm ml-7 count-class" id="countSubuh">
+                            <label class="hours"></label>
+                            <label class="minutes"></label>
+                        </div>
+
+                    </div>
+                    <div class="waktu-sholat mt-8">
+                        <i class="far fa-clock" style="margin-right: 20%;" aria-hidden="true"></i><label
+                            id="subuh"></label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="remaining-pray ml-9">
+                        <div class="pt-8">
+                            <i class="fas fa-sun text-yellow-400 mr-3 mt-5"></i><big>Dzuhur</big>
+                        </div>
+                        <div class="text-sm ml-7 count-class" id="countDzuhur">
+                            <label class="hours"></label>
+                            <label class="minutes"></label>
+                        </div>
+                    </div>
+                    <div class="waktu-sholat mt-8">
+                        <i class="far fa-clock" style="margin-right: 20%;" aria-hidden="true"></i><label
+                            id="dzuhur"></label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="remaining-pray ml-9">
+                        <div class="pt-8">
+                            <i class="fas fa-cloud-sun fa-sm text-yellow-400 mr-3 mt-5"></i><big>Ashar</big>
+                        </div>
+                        <div class="text-sm ml-7 count-class" id="countAshar">
+                            <label class="hours"></label>
+                            <label class="minutes"></label>
+                        </div>
+                    </div>
+                    <div class="waktu-sholat mt-8">
+                        <i class="far fa-clock" style="margin-right: 20%;" aria-hidden="true"></i><label
+                            id="ashar"></label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="remaining-pray ml-9">
+                        <div class="pt-8">
+                            <i class="fas fa-moon text-yellow-400 mr-3 mt-5"
+                                style="transform: rotateY(180deg)"></i><big>Maghrib</big>
+                        </div>
+                        <div class="text-sm ml-7 count-class" id="countMaghrib">
+                            <label class="hours"></label>
+                            <label class="minutes"></label>
+                        </div>
+                    </div>
+                    <div class="waktu-sholat mt-8">
+                        <i class="far fa-clock" style="margin-right: 20%;" aria-hidden="true"></i><label
+                            id="maghrib"></label>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4 items-center">
+                    <div class="remaining-pray ml-9">
+                        <div class="pt-8">
+                            <i class="fas fa-circle text-yellow-400 mr-3 mt-5"></i><big>Isya</big>
+                        </div>
+                        <div class="text-sm ml-7 count-class" id="countIsya">
+                            <label class="hours"></label>
+                            <label class="minutes"></label>
+                        </div>
+                    </div>
+                    <div class="waktu-sholat mt-8">
+                        <i class="far fa-clock" style="margin-right: 20%;" aria-hidden="true"></i><label
+                            id="isya"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.all.min.js"></script>
+    <script src="public/js/script.js"></script>
+
+</body>
